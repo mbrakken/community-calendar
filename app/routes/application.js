@@ -1,5 +1,4 @@
 import Ember from 'ember';
-// import ajax from 'ember-ajax';
 import ENV from '../config/environment';
 
 export default Ember.Route.extend({
@@ -8,14 +7,19 @@ export default Ember.Route.extend({
 
   model() {
 
-    return this.store.findAll('event');
+    // return this.store.findAll('event');
 
-    // return this.get('ajax').request("https://data.cityofmadison.com/resource/2cz6-h795.json", {
-    //   data: {
-    //     "$limit" : 10,
-    //     "$$app_token" : ENV.APP.SOCRATA_TOKEN
-    //   }
-    // });
+    return this.get('ajax').request("https://data.cityofmadison.com/resource/2cz6-h795.json", {
+      data: {
+        "$limit" : 10,
+        "$$app_token" : ENV.APP.SOCRATA_TOKEN
+      }
+    }).then(response => {
+      let data = {
+        'events': response
+      };
+      return this.store.pushPayload(data);
+    }).then(() => this.store.peekAll('event'));
   },
 
   setupController() {

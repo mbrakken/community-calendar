@@ -8,7 +8,6 @@ export default DS.Model.extend({
   description: DS.attr(),
   district: DS.attr(),
   endDate: DS.attr('date'),
-  eventId: DS.attr('number'),
   eventTime: DS.attr(),
   location: DS.attr(),
   startDate: DS.attr('date'),
